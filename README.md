@@ -17,8 +17,26 @@ O professor cola o código de habilidade e o objeto de conhecimento recebidos da
 Fluxo: Professor → Frontend → Webhook n8n → Claude API → Supabase → resposta
 ```
 
+## Como rodar
+
+### Banco de dados
+1. Crie um projeto no [Supabase](https://supabase.com)
+2. Acesse o SQL Editor do seu projeto
+3. Execute o script `docs/banco.sql`
+4. O script já ativa RLS (Row Level Security) nas tabelas
+
+### Variáveis de ambiente
+Crie um arquivo `.env` na raiz do projeto (não versionar):
+```
+SUPABASE_URL=sua_url_aqui
+SUPABASE_KEY=sua_chave_aqui
+ANTHROPIC_API_KEY=sua_chave_aqui
+```
+
 ## Roadmap
 - [x] Modelagem do banco de dados
+- [x] Banco criado no Supabase com RLS ativo
+- [x] Repositório documentado no GitHub
 - [ ] Autenticação (cadastro e login por professor)
 - [ ] Geração de planejamento com IA
 - [ ] Interface do professor (steps de input)
@@ -32,4 +50,5 @@ Fluxo: Professor → Frontend → Webhook n8n → Claude API → Supabase → re
 - HTML / React (frontend)
 
 ## Status
-Em desenvolvimento — Fase 1 (banco de dados e autenticação)
+Em desenvolvimento — Fase 1 concluída (banco de dados)
+Próximo: Fase 2 — autenticação via webhook no n8n
