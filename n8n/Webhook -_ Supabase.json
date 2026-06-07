@@ -1,0 +1,112 @@
+{
+  "name": "Webhook -> Supabase",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cadastro",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "37fc6c17-c612-45a7-a46d-2d7f64d12afb",
+      "name": "Webhook",
+      "webhookId": "95c60633-ce58-43ef-85d3-2084c4a8094f"
+    },
+    {
+      "parameters": {
+        "value": "={{ $json.body.senha }}",
+        "dataPropertyName": "senha_hash"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "71442102-92a2-4394-aad6-2edd68ab9f8f",
+      "name": "Crypto"
+    },
+    {
+      "parameters": {
+        "tableId": "professores",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{$('Webhook').item.json.body.nome}}"
+            },
+            {
+              "fieldId": "sobrenome",
+              "fieldValue": "={{ $('Webhook').item.json.body.sobrenome }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $('Webhook').item.json.body.email }}"
+            },
+            {
+              "fieldId": "senha_hash",
+              "fieldValue": "={{ $json.senha_hash }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "655d6aeb-8a46-477c-8311-9cbd5e1b5f51",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "DzeLLu6HbENOKMhh",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "732bd3a8-d85f-44b8-8f79-73c29bbcd100",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d537343e0f9cb0fdb835d8e824f2c70aeebd2b59fc098108e6ed2a93788f4cfb"
+  },
+  "nodeGroups": [],
+  "id": "gSCQkvrU5fMtbUUi",
+  "tags": []
+}
